@@ -8,12 +8,12 @@
 </head>
 <body>
   <label>Foundry user<select id="user"></select></label>
-  <label>Pairing secret<input id="secret" type="password" autocomplete="off"></label>
+  <label>Global pairing secret<input id="secret" type="password" autocomplete="off"></label>
   <label>Action<select id="action"></select></label>
   <label>Document or token UUID<input id="uuid" placeholder="Actor.x, Macro.x, Scene.x.Token.x"></label>
   <label>Advanced payload<textarea id="payload" rows="7" spellcheck="false">{}</textarea></label>
+  <small>The pairing secret is shared automatically by every Tely's Integration button.</small>
   <p id="status">Waiting for Foundry…</p>
   <script src="inspector.js"></script>
 </body>
 </html>
-

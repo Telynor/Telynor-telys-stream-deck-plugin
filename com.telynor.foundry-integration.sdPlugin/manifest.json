@@ -1,6 +1,6 @@
 {
   "Name": "Tely's Stream Deck Integration",
-  "Version": "0.1.0.0",
+  "Version": "0.1.1.0",
   "UUID": "com.telynor.foundry-integration",
   "Author": "Telynor",
   "Description": "Control Foundry VTT and Tely's Star Rail features from Stream Deck.",

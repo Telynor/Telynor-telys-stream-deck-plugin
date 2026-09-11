@@ -2,6 +2,7 @@ let websocket;
 let uuid;
 let actionUuid;
 let settings = {};
+let globalSettings = {};
 
 window.connectElgatoStreamDeckSocket = (port, propertyInspectorUUID, registerEvent, info, actionInfo) => {
   uuid = propertyInspectorUUID;
@@ -12,17 +13,29 @@ window.connectElgatoStreamDeckSocket = (port, propertyInspectorUUID, registerEve
   websocket.onopen = () => {
     websocket.send(JSON.stringify({ event: registerEvent, uuid }));
     fillFromSettings();
+    websocket.send(JSON.stringify({ event: "getGlobalSettings", context: uuid }));
     requestCatalog();
   };
   websocket.onmessage = ({ data }) => {
     const message = JSON.parse(data);
+    if (message.event === "didReceiveGlobalSettings") {
+      globalSettings = message.payload?.settings ?? {};
+      const legacySecret = settings.secret ?? "";
+      if (!globalSettings.pairingSecret && legacySecret) {
+        globalSettings.pairingSecret = legacySecret;
+        saveGlobalSettings();
+      }
+      document.querySelector("#secret").value = globalSettings.pairingSecret ?? legacySecret;
+      requestCatalog();
+      return;
+    }
     if (message.event !== "sendToPropertyInspector" || message.payload?.event !== "catalog") return;
     renderCatalog(message.payload);
   };
 };
 
 function fillFromSettings() {
-  document.querySelector("#secret").value = settings.secret ?? "";
+  document.querySelector("#secret").value = globalSettings.pairingSecret ?? settings.secret ?? "";
   document.querySelector("#uuid").value = settings.payload?.uuid ?? "";
   document.querySelector("#payload").value = JSON.stringify(settings.payload ?? {}, null, 2);
 }
@@ -65,12 +78,21 @@ function save() {
   settings = {
     ...settings,
     userId: document.querySelector("#user").value,
-    secret: document.querySelector("#secret").value,
     actionId: document.querySelector("#action").value || settings.actionId,
     payload
   };
+  delete settings.secret;
   websocket.send(JSON.stringify({ event: "setSettings", context: uuid, payload: settings }));
 }
 
-for (const element of document.querySelectorAll("input, select, textarea")) element.addEventListener("change", save);
+function saveGlobalSettings() {
+  websocket.send(JSON.stringify({ event: "setGlobalSettings", context: uuid, payload: globalSettings }));
+}
+
+document.querySelector("#secret").addEventListener("change", (event) => {
+  globalSettings.pairingSecret = event.target.value;
+  saveGlobalSettings();
+  requestCatalog();
+});
+for (const element of document.querySelectorAll("select, textarea, #uuid")) element.addEventListener("change", save);
 function escapeHtml(value) { const node = document.createElement("span"); node.textContent = String(value ?? ""); return node.innerHTML; }

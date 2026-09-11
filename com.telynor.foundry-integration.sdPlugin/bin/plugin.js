@@ -3718,10 +3718,15 @@ import crypto from "node:crypto";
 var clients = /* @__PURE__ */ new Map();
 var actionContexts = /* @__PURE__ */ new Map();
 var pending = /* @__PURE__ */ new Map();
+var globalSettings = {};
 function send(client, message) {
   if (client?.socket?.readyState === 1) client.socket.send(JSON.stringify(message));
 }
-function matchingClient(settings = {}) {
+function withGlobalSettings(settings = {}) {
+  return { ...settings, secret: globalSettings.pairingSecret || settings.secret || "" };
+}
+function matchingClient(buttonSettings = {}) {
+  const settings = withGlobalSettings(buttonSettings);
   const secretMatches = (client) => Boolean(settings.secret) && client.secret === settings.secret;
   if (settings.userId && clients.has(settings.userId)) {
     const client = clients.get(settings.userId);
@@ -3730,7 +3735,7 @@ function matchingClient(settings = {}) {
   return [...clients.values()].find(secretMatches);
 }
 function runConfiguredAction(ev, defaultActionId = null) {
-  const settings = ev.payload.settings ?? {};
+  const settings = withGlobalSettings(ev.payload.settings ?? {});
   const client = matchingClient(settings);
   if (!client) return ev.action.showAlert();
   const actionId = settings.actionId || defaultActionId;
@@ -3821,5 +3826,9 @@ server.on("connection", (socket) => {
   });
 });
 streamDeck.logger.setLevel("INFO");
-streamDeck.connect();
+streamDeck.settings.onDidReceiveGlobalSettings((ev) => {
+  globalSettings = ev.settings ?? {};
+});
+await streamDeck.connect();
+globalSettings = await streamDeck.settings.getGlobalSettings();
 //# sourceMappingURL=plugin.js.map
