@@ -90,6 +90,14 @@ for (const [uuid, defaultActionId] of definitions) {
 }
 
 const server = new WebSocketServer({ host: "127.0.0.1", port: 17321 });
+server.on("listening", () => {
+  console.log("Tely's Stream Deck Integration | Foundry bridge listening on 127.0.0.1:17321");
+  streamDeck.logger.info("Foundry bridge listening on 127.0.0.1:17321");
+});
+server.on("error", (error) => {
+  console.error("Tely's Stream Deck Integration | Foundry bridge failed", error);
+  streamDeck.logger.error("Foundry bridge failed", error);
+});
 
 server.on("connection", (socket) => {
   let client = null;
@@ -127,5 +135,8 @@ streamDeck.logger.setLevel("INFO");
 streamDeck.settings.onDidReceiveGlobalSettings((ev) => {
   globalSettings = ev.settings ?? {};
 });
-await streamDeck.connect();
-globalSettings = await streamDeck.settings.getGlobalSettings();
+streamDeck.connect()
+  .then(async () => {
+    globalSettings = await streamDeck.settings.getGlobalSettings();
+  })
+  .catch((error) => streamDeck.logger.error("Plugin startup failed", error));

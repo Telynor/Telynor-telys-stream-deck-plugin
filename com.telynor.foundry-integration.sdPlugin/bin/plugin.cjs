@@ -4,13 +4,7 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
-  get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
-}) : x)(function(x) {
-  if (typeof require !== "undefined") return require.apply(this, arguments);
-  throw Error('Dynamic require of "' + x + '" is not supported');
-});
-var __commonJS = (cb, mod) => function __require2() {
+var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
 var __export = (target, all) => {
@@ -36,12 +30,12 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 
 // node_modules/ws/lib/constants.js
 var require_constants = __commonJS({
-  "node_modules/ws/lib/constants.js"(exports, module) {
+  "node_modules/ws/lib/constants.js"(exports2, module2) {
     "use strict";
     var BINARY_TYPES = ["nodebuffer", "arraybuffer", "fragments"];
     var hasBlob = typeof Blob !== "undefined";
     if (hasBlob) BINARY_TYPES.push("blob");
-    module.exports = {
+    module2.exports = {
       BINARY_TYPES,
       CLOSE_TIMEOUT: 3e4,
       EMPTY_BUFFER: Buffer.alloc(0),
@@ -59,7 +53,7 @@ var require_constants = __commonJS({
 
 // node_modules/ws/lib/buffer-util.js
 var require_buffer_util = __commonJS({
-  "node_modules/ws/lib/buffer-util.js"(exports, module) {
+  "node_modules/ws/lib/buffer-util.js"(exports2, module2) {
     "use strict";
     var { EMPTY_BUFFER } = require_constants();
     var FastBuffer = Buffer[Symbol.species];
@@ -108,7 +102,7 @@ var require_buffer_util = __commonJS({
       }
       return buf;
     }
-    module.exports = {
+    module2.exports = {
       concat,
       mask: _mask,
       toArrayBuffer,
@@ -117,12 +111,12 @@ var require_buffer_util = __commonJS({
     };
     if (!process.env.WS_NO_BUFFER_UTIL) {
       try {
-        const bufferUtil = __require("bufferutil");
-        module.exports.mask = function(source, mask, output, offset, length) {
+        const bufferUtil = require("bufferutil");
+        module2.exports.mask = function(source, mask, output, offset, length) {
           if (length < 48) _mask(source, mask, output, offset, length);
           else bufferUtil.mask(source, mask, output, offset, length);
         };
-        module.exports.unmask = function(buffer, mask) {
+        module2.exports.unmask = function(buffer, mask) {
           if (buffer.length < 32) _unmask(buffer, mask);
           else bufferUtil.unmask(buffer, mask);
         };
@@ -134,7 +128,7 @@ var require_buffer_util = __commonJS({
 
 // node_modules/ws/lib/limiter.js
 var require_limiter = __commonJS({
-  "node_modules/ws/lib/limiter.js"(exports, module) {
+  "node_modules/ws/lib/limiter.js"(exports2, module2) {
     "use strict";
     var kDone = Symbol("kDone");
     var kRun = Symbol("kRun");
@@ -178,15 +172,15 @@ var require_limiter = __commonJS({
         }
       }
     };
-    module.exports = Limiter;
+    module2.exports = Limiter;
   }
 });
 
 // node_modules/ws/lib/permessage-deflate.js
 var require_permessage_deflate = __commonJS({
-  "node_modules/ws/lib/permessage-deflate.js"(exports, module) {
+  "node_modules/ws/lib/permessage-deflate.js"(exports2, module2) {
     "use strict";
-    var zlib = __require("zlib");
+    var zlib = require("zlib");
     var bufferUtil = require_buffer_util();
     var Limiter = require_limiter();
     var { kStatusCode } = require_constants();
@@ -536,7 +530,7 @@ var require_permessage_deflate = __commonJS({
         });
       }
     };
-    module.exports = PerMessageDeflate2;
+    module2.exports = PerMessageDeflate2;
     function deflateOnData(chunk) {
       this[kBuffers].push(chunk);
       this[kTotalLength] += chunk.length;
@@ -567,9 +561,9 @@ var require_permessage_deflate = __commonJS({
 
 // node_modules/ws/lib/validation.js
 var require_validation = __commonJS({
-  "node_modules/ws/lib/validation.js"(exports, module) {
+  "node_modules/ws/lib/validation.js"(exports2, module2) {
     "use strict";
-    var { isUtf8 } = __require("buffer");
+    var { isUtf8 } = require("buffer");
     var { hasBlob } = require_constants();
     var tokenChars = [
       0,
@@ -744,20 +738,20 @@ var require_validation = __commonJS({
     function isBlob(value) {
       return hasBlob && typeof value === "object" && typeof value.arrayBuffer === "function" && typeof value.type === "string" && typeof value.stream === "function" && (value[Symbol.toStringTag] === "Blob" || value[Symbol.toStringTag] === "File");
     }
-    module.exports = {
+    module2.exports = {
       isBlob,
       isValidStatusCode,
       isValidUTF8: _isValidUTF8,
       tokenChars
     };
     if (isUtf8) {
-      module.exports.isValidUTF8 = function(buf) {
+      module2.exports.isValidUTF8 = function(buf) {
         return buf.length < 24 ? _isValidUTF8(buf) : isUtf8(buf);
       };
     } else if (!process.env.WS_NO_UTF_8_VALIDATE) {
       try {
-        const isValidUTF8 = __require("utf-8-validate");
-        module.exports.isValidUTF8 = function(buf) {
+        const isValidUTF8 = require("utf-8-validate");
+        module2.exports.isValidUTF8 = function(buf) {
           return buf.length < 32 ? _isValidUTF8(buf) : isValidUTF8(buf);
         };
       } catch (e) {
@@ -768,9 +762,9 @@ var require_validation = __commonJS({
 
 // node_modules/ws/lib/receiver.js
 var require_receiver = __commonJS({
-  "node_modules/ws/lib/receiver.js"(exports, module) {
+  "node_modules/ws/lib/receiver.js"(exports2, module2) {
     "use strict";
-    var { Writable } = __require("stream");
+    var { Writable } = require("stream");
     var PerMessageDeflate2 = require_permessage_deflate();
     var {
       BINARY_TYPES,
@@ -1385,19 +1379,19 @@ var require_receiver = __commonJS({
         return err;
       }
     };
-    module.exports = Receiver2;
+    module2.exports = Receiver2;
   }
 });
 
 // node_modules/ws/lib/sender.js
 var require_sender = __commonJS({
-  "node_modules/ws/lib/sender.js"(exports, module) {
+  "node_modules/ws/lib/sender.js"(exports2, module2) {
     "use strict";
-    var { Duplex } = __require("stream");
-    var { randomFillSync } = __require("crypto");
+    var { Duplex } = require("stream");
+    var { randomFillSync } = require("crypto");
     var {
       types: { isUint8Array }
-    } = __require("util");
+    } = require("util");
     var PerMessageDeflate2 = require_permessage_deflate();
     var { EMPTY_BUFFER, kWebSocket, NOOP } = require_constants();
     var { isBlob, isValidStatusCode } = require_validation();
@@ -1866,7 +1860,7 @@ var require_sender = __commonJS({
         }
       }
     };
-    module.exports = Sender2;
+    module2.exports = Sender2;
     function callCallbacks(sender, err, cb) {
       if (typeof cb === "function") cb(err);
       for (let i = 0; i < sender._queue.length; i++) {
@@ -1884,7 +1878,7 @@ var require_sender = __commonJS({
 
 // node_modules/ws/lib/event-target.js
 var require_event_target = __commonJS({
-  "node_modules/ws/lib/event-target.js"(exports, module) {
+  "node_modules/ws/lib/event-target.js"(exports2, module2) {
     "use strict";
     var { kForOnEventAttribute, kListener } = require_constants();
     var kCode = Symbol("kCode");
@@ -2094,7 +2088,7 @@ var require_event_target = __commonJS({
         }
       }
     };
-    module.exports = {
+    module2.exports = {
       CloseEvent,
       ErrorEvent,
       Event: Event2,
@@ -2113,7 +2107,7 @@ var require_event_target = __commonJS({
 
 // node_modules/ws/lib/extension.js
 var require_extension = __commonJS({
-  "node_modules/ws/lib/extension.js"(exports, module) {
+  "node_modules/ws/lib/extension.js"(exports2, module2) {
     "use strict";
     var { tokenChars } = require_validation();
     function push(dest, name, elem) {
@@ -2260,22 +2254,22 @@ var require_extension = __commonJS({
         }).join(", ");
       }).join(", ");
     }
-    module.exports = { format, parse: parse2 };
+    module2.exports = { format, parse: parse2 };
   }
 });
 
 // node_modules/ws/lib/websocket.js
 var require_websocket = __commonJS({
-  "node_modules/ws/lib/websocket.js"(exports, module) {
+  "node_modules/ws/lib/websocket.js"(exports2, module2) {
     "use strict";
-    var EventEmitter2 = __require("events");
-    var https = __require("https");
-    var http = __require("http");
-    var net = __require("net");
-    var tls = __require("tls");
-    var { randomBytes, createHash } = __require("crypto");
-    var { Duplex, Readable } = __require("stream");
-    var { URL: URL2 } = __require("url");
+    var EventEmitter2 = require("events");
+    var https = require("https");
+    var http = require("http");
+    var net = require("net");
+    var tls = require("tls");
+    var { randomBytes, createHash } = require("crypto");
+    var { Duplex, Readable } = require("stream");
+    var { URL: URL2 } = require("url");
     var PerMessageDeflate2 = require_permessage_deflate();
     var Receiver2 = require_receiver();
     var Sender2 = require_sender();
@@ -2744,7 +2738,7 @@ var require_websocket = __commonJS({
     });
     WebSocket2.prototype.addEventListener = addEventListener;
     WebSocket2.prototype.removeEventListener = removeEventListener;
-    module.exports = WebSocket2;
+    module2.exports = WebSocket2;
     function initAsClient(websocket, address, protocols, options) {
       const opts = {
         allowSynchronousEvents: true,
@@ -3162,10 +3156,10 @@ var require_websocket = __commonJS({
 
 // node_modules/ws/lib/stream.js
 var require_stream = __commonJS({
-  "node_modules/ws/lib/stream.js"(exports, module) {
+  "node_modules/ws/lib/stream.js"(exports2, module2) {
     "use strict";
     var WebSocket2 = require_websocket();
-    var { Duplex } = __require("stream");
+    var { Duplex } = require("stream");
     function emitClose(stream) {
       stream.emit("close");
     }
@@ -3254,13 +3248,13 @@ var require_stream = __commonJS({
       duplex.on("error", duplexOnError);
       return duplex;
     }
-    module.exports = createWebSocketStream2;
+    module2.exports = createWebSocketStream2;
   }
 });
 
 // node_modules/ws/lib/subprotocol.js
 var require_subprotocol = __commonJS({
-  "node_modules/ws/lib/subprotocol.js"(exports, module) {
+  "node_modules/ws/lib/subprotocol.js"(exports2, module2) {
     "use strict";
     var { tokenChars } = require_validation();
     function parse2(header) {
@@ -3299,18 +3293,18 @@ var require_subprotocol = __commonJS({
       protocols.add(protocol);
       return protocols;
     }
-    module.exports = { parse: parse2 };
+    module2.exports = { parse: parse2 };
   }
 });
 
 // node_modules/ws/lib/websocket-server.js
 var require_websocket_server = __commonJS({
-  "node_modules/ws/lib/websocket-server.js"(exports, module) {
+  "node_modules/ws/lib/websocket-server.js"(exports2, module2) {
     "use strict";
-    var EventEmitter2 = __require("events");
-    var http = __require("http");
-    var { Duplex } = __require("stream");
-    var { createHash } = __require("crypto");
+    var EventEmitter2 = require("events");
+    var http = require("http");
+    var { Duplex } = require("stream");
+    var { createHash } = require("crypto");
     var extension2 = require_extension();
     var PerMessageDeflate2 = require_permessage_deflate();
     var subprotocol2 = require_subprotocol();
@@ -3662,7 +3656,7 @@ var require_websocket_server = __commonJS({
         cb(ws, req);
       }
     };
-    module.exports = WebSocketServer2;
+    module2.exports = WebSocketServer2;
     function addListeners(server2, map2) {
       for (const event of Object.keys(map2)) server2.on(event, map2[event]);
       return function removeListeners() {
@@ -15500,8 +15494,8 @@ var Logger = class _Logger {
 };
 
 // node_modules/@elgato/utils/dist/logging/node/file-target.js
-import fs from "node:fs";
-import path from "node:path";
+var import_node_fs = __toESM(require("node:fs"), 1);
+var import_node_path = __toESM(require("node:path"), 1);
 var FileTarget = class {
   /**
    * File path where logs will be written.
@@ -15528,13 +15522,13 @@ var FileTarget = class {
    * @inheritdoc
    */
   write(entry) {
-    const fd = fs.openSync(this.#filePath, "a");
+    const fd = import_node_fs.default.openSync(this.#filePath, "a");
     try {
       const msg = this.#options.format(entry);
-      fs.writeSync(fd, msg + "\n");
+      import_node_fs.default.writeSync(fd, msg + "\n");
       this.#size += msg.length;
     } finally {
-      fs.closeSync(fd);
+      import_node_fs.default.closeSync(fd);
     }
     if (this.#size >= this.#options.maxSize) {
       this.reIndex();
@@ -15547,7 +15541,7 @@ var FileTarget = class {
    * @returns File path that represents the indexed log file.
    */
   getLogFilePath(index = 0) {
-    return path.join(this.#options.dest, `${this.#options.fileName}.${index}.log`);
+    return import_node_path.default.join(this.#options.dest, `${this.#options.fileName}.${index}.log`);
   }
   /**
    * Gets the log files associated with this file target, including past and present.
@@ -15555,7 +15549,7 @@ var FileTarget = class {
    */
   getLogFiles() {
     const regex = /^\.(\d+)\.log$/;
-    return fs.readdirSync(this.#options.dest, { withFileTypes: true }).reduce((prev, entry) => {
+    return import_node_fs.default.readdirSync(this.#options.dest, { withFileTypes: true }).reduce((prev, entry) => {
       if (entry.isDirectory() || entry.name.indexOf(this.#options.fileName) < 0) {
         return prev;
       }
@@ -15564,7 +15558,7 @@ var FileTarget = class {
         return prev;
       }
       prev.push({
-        path: path.join(this.#options.dest, entry.name),
+        path: import_node_path.default.join(this.#options.dest, entry.name),
         index: parseInt(match[1])
       });
       return prev;
@@ -15578,8 +15572,8 @@ var FileTarget = class {
    * for a new log file.
    */
   reIndex() {
-    if (!fs.existsSync(this.#options.dest)) {
-      fs.mkdirSync(this.#options.dest, {
+    if (!import_node_fs.default.existsSync(this.#options.dest)) {
+      import_node_fs.default.mkdirSync(this.#options.dest, {
         recursive: true
       });
       return;
@@ -15588,20 +15582,20 @@ var FileTarget = class {
     for (let i = logFiles.length - 1; i >= 0; i--) {
       const log = logFiles[i];
       if (i >= this.#options.maxFileCount - 1) {
-        fs.rmSync(log.path);
+        import_node_fs.default.rmSync(log.path);
       } else {
-        fs.renameSync(log.path, this.getLogFilePath(i + 1));
+        import_node_fs.default.renameSync(log.path, this.getLogFilePath(i + 1));
       }
     }
   }
 };
 
 // node_modules/@elgato/streamdeck/dist/plugin/logging/index.js
-import path3 from "node:path";
-import { cwd } from "node:process";
+var import_node_path3 = __toESM(require("node:path"), 1);
+var import_node_process = require("node:process");
 
 // node_modules/@elgato/streamdeck/dist/plugin/common/utils.js
-import path2 from "node:path";
+var import_node_path2 = __toESM(require("node:path"), 1);
 var __isDebugMode = void 0;
 function isDebugMode() {
   if (__isDebugMode === void 0) {
@@ -15613,14 +15607,14 @@ function isDebugMode() {
   return __isDebugMode;
 }
 function getPluginUUID() {
-  const name = path2.basename(process.cwd());
+  const name = import_node_path2.default.basename(process.cwd());
   const suffixIndex = name.lastIndexOf(".sdPlugin");
   return suffixIndex < 0 ? name : name.substring(0, suffixIndex);
 }
 
 // node_modules/@elgato/streamdeck/dist/plugin/logging/index.js
 var fileTarget = new FileTarget({
-  dest: path3.join(cwd(), "logs"),
+  dest: import_node_path3.default.join((0, import_node_process.cwd)(), "logs"),
   fileName: getPluginUUID(),
   format: stringFormatter(),
   maxFileCount: 10,
@@ -15821,15 +15815,15 @@ var ActionEvent = class extends ActionWithoutPayloadEvent {
 };
 
 // node_modules/@elgato/streamdeck/dist/plugin/manifest.js
-import { existsSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+var import_node_fs2 = require("node:fs");
+var import_node_path4 = require("node:path");
 var manifest = new Lazy(() => {
-  const path5 = join(process.cwd(), "manifest.json");
-  if (!existsSync(path5)) {
+  const path5 = (0, import_node_path4.join)(process.cwd(), "manifest.json");
+  if (!(0, import_node_fs2.existsSync)(path5)) {
     throw new Error("Failed to read manifest.json as the file does not exist.");
   }
   try {
-    return JSON.parse(readFileSync(path5, {
+    return JSON.parse((0, import_node_fs2.readFileSync)(path5, {
       encoding: "utf-8",
       flag: "r"
     }).toString());
@@ -15858,7 +15852,7 @@ function getManifest() {
 }
 
 // node_modules/@elgato/streamdeck/dist/plugin/settings.js
-import { randomUUID } from "node:crypto";
+var import_node_crypto = require("node:crypto");
 
 // node_modules/@elgato/streamdeck/dist/plugin/actions/config.js
 var actionConfig = {
@@ -16092,7 +16086,7 @@ var settings = {
       connection.send({
         event: "getGlobalSettings",
         context: connection.registrationParameters.pluginUUID,
-        id: randomUUID()
+        id: (0, import_node_crypto.randomUUID)()
       });
     });
   },
@@ -16258,7 +16252,7 @@ var UIController = class {
 var ui = new UIController();
 
 // node_modules/@elgato/streamdeck/dist/plugin/actions/action.js
-import { randomUUID as randomUUID2 } from "node:crypto";
+var import_node_crypto2 = require("node:crypto");
 
 // node_modules/@elgato/streamdeck/dist/plugin/actions/cache.js
 var SettingsCache = class {
@@ -16504,7 +16498,7 @@ var Action = class extends ActionContext {
     await connection.send({
       event: command,
       context: this.id,
-      id: randomUUID2()
+      id: (0, import_node_crypto2.randomUUID)()
     });
     return promise2;
   }
@@ -17073,15 +17067,15 @@ var DeviceService = class extends ReadOnlyDeviceStore {
 var deviceService = new DeviceService();
 
 // node_modules/@elgato/streamdeck/dist/plugin/i18n.js
-import fs2 from "node:fs";
-import path4 from "node:path";
+var import_node_fs3 = __toESM(require("node:fs"), 1);
+var import_node_path5 = __toESM(require("node:path"), 1);
 function fileSystemLocaleProvider(language) {
-  const filePath = path4.join(process.cwd(), `${language}.json`);
-  if (!fs2.existsSync(filePath)) {
+  const filePath = import_node_path5.default.join(process.cwd(), `${language}.json`);
+  if (!import_node_fs3.default.existsSync(filePath)) {
     return null;
   }
   try {
-    const contents = fs2.readFileSync(filePath, { flag: "r" })?.toString();
+    const contents = import_node_fs3.default.readFileSync(filePath, { flag: "r" })?.toString();
     return parseLocalizations(contents);
   } catch (err) {
     logger.error(`Failed to load translations from ${filePath}`, err);
@@ -17264,7 +17258,7 @@ var streamDeck = {
 var plugin_default = streamDeck;
 
 // src/plugin.js
-import crypto from "node:crypto";
+var import_node_crypto3 = __toESM(require("node:crypto"), 1);
 var clients = /* @__PURE__ */ new Map();
 var actionContexts = /* @__PURE__ */ new Map();
 var pending = /* @__PURE__ */ new Map();
@@ -17290,7 +17284,7 @@ function runConfiguredAction(ev, defaultActionId = null) {
   if (!client) return ev.action.showAlert();
   const actionId = settings2.actionId || defaultActionId;
   if (!actionId) return ev.action.showAlert();
-  const requestId = crypto.randomUUID();
+  const requestId = import_node_crypto3.default.randomUUID();
   pending.set(requestId, ev.action);
   send(client, {
     type: "execute",
@@ -17343,6 +17337,14 @@ for (const [uuid3, defaultActionId] of definitions) {
   }))());
 }
 var server = new import_websocket_server.default({ host: "127.0.0.1", port: 17321 });
+server.on("listening", () => {
+  console.log("Tely's Stream Deck Integration | Foundry bridge listening on 127.0.0.1:17321");
+  plugin_default.logger.info("Foundry bridge listening on 127.0.0.1:17321");
+});
+server.on("error", (error40) => {
+  console.error("Tely's Stream Deck Integration | Foundry bridge failed", error40);
+  plugin_default.logger.error("Foundry bridge failed", error40);
+});
 server.on("connection", (socket) => {
   let client = null;
   socket.on("message", async (raw) => {
@@ -17381,8 +17383,9 @@ plugin_default.logger.setLevel("INFO");
 plugin_default.settings.onDidReceiveGlobalSettings((ev) => {
   globalSettings = ev.settings ?? {};
 });
-await plugin_default.connect();
-globalSettings = await plugin_default.settings.getGlobalSettings();
+plugin_default.connect().then(async () => {
+  globalSettings = await plugin_default.settings.getGlobalSettings();
+}).catch((error40) => plugin_default.logger.error("Plugin startup failed", error40));
 /*! Bundled license information:
 
 @elgato/schemas/dist/streamdeck/plugins/index.mjs:
@@ -17393,4 +17396,3 @@ globalSettings = await plugin_default.settings.getGlobalSettings();
    * @copyright Copyright (c) Corsair Memory Inc.
    *)
 */
-//# sourceMappingURL=plugin.js.map
