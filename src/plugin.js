@@ -58,6 +58,7 @@ class FoundryAction extends SingletonAction {
   }
 
   onKeyDown(ev) {
+    if (ev.action.manifestId === "com.telynor.foundry-integration.settings") return ev.action.showOk();
     runConfiguredAction(ev, this.defaultActionId);
   }
 
@@ -74,6 +75,7 @@ class FoundryAction extends SingletonAction {
 }
 
 const definitions = [
+  ["com.telynor.foundry-integration.settings", null],
   ["com.telynor.foundry-integration.universal", null],
   ["com.telynor.foundry-integration.open-document", "foundry.open-document"],
   ["com.telynor.foundry-integration.run-macro", "foundry.run-macro"],

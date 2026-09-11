@@ -1,6 +1,6 @@
 {
   "Name": "Tely's Stream Deck Integration",
-  "Version": "0.1.1.0",
+  "Version": "0.1.2.0",
   "UUID": "com.telynor.foundry-integration",
   "Author": "Telynor",
   "Description": "Control Foundry VTT and Tely's Star Rail features from Stream Deck.",
@@ -28,6 +28,22 @@
     "Debug": "enabled"
   },
   "Actions": [
+    {
+      "Name": "Connection Settings",
+      "UUID": "com.telynor.foundry-integration.settings",
+      "Icon": "imgs/settings",
+      "Tooltip": "Configure the connection shared by every Foundry action",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/settings",
+          "TitleAlignment": "bottom",
+          "FontSize": 11
+        }
+      ]
+    },
     {
       "Name": "Foundry Action",
       "UUID": "com.telynor.foundry-integration.universal",

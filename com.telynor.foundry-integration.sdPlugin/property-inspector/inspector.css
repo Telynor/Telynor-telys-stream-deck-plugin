@@ -1,8 +1,9 @@
 :root { color-scheme: dark; font: 13px system-ui, sans-serif; }
 body { margin: 12px; color: #ddd; background: #2d2d2d; }
+h3 { margin: 0 0 12px; font-size: 14px; }
 label { display: grid; grid-template-columns: 110px 1fr; align-items: center; gap: 8px; margin: 9px 0; }
 input, select, textarea { box-sizing: border-box; width: 100%; padding: 6px 8px; color: #fff; border: 1px solid #666; border-radius: 3px; background: #3b3b3b; }
 textarea { resize: vertical; font-family: ui-monospace, monospace; }
 #status { color: #e4b84d; }
 #status.connected { color: #66d989; }
-
+[hidden] { display: none !important; }
