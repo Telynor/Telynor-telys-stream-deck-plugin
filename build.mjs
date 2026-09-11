@@ -7,7 +7,5 @@ await build({
   platform: "node",
   format: "esm",
   target: "node20",
-  external: ["@elgato/streamdeck"],
   sourcemap: true
 });
-

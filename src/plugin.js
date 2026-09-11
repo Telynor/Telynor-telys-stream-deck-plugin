@@ -1,4 +1,4 @@
-import streamDeck, { action, SingletonAction, WillAppearEvent, KeyDownEvent, SendToPluginEvent } from "@elgato/streamdeck";
+import streamDeck, { action, SingletonAction } from "@elgato/streamdeck";
 import { WebSocketServer } from "ws";
 import crypto from "node:crypto";
 
