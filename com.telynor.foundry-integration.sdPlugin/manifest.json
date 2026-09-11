@@ -1,0 +1,112 @@
+{
+  "Name": "Tely's Stream Deck Integration",
+  "Version": "0.1.0.0",
+  "UUID": "com.telynor.foundry-integration",
+  "Author": "Telynor",
+  "Description": "Control Foundry VTT and Tely's Star Rail features from Stream Deck.",
+  "Category": "Tely's Stream Deck Integration",
+  "CategoryIcon": "imgs/category",
+  "Icon": "imgs/plugin",
+  "CodePath": "bin/plugin.js",
+  "PropertyInspectorPath": "property-inspector/index.html",
+  "SDKVersion": 2,
+  "Software": {
+    "MinimumVersion": "6.4"
+  },
+  "OS": [
+    {
+      "Platform": "windows",
+      "MinimumVersion": "10"
+    },
+    {
+      "Platform": "mac",
+      "MinimumVersion": "12"
+    }
+  ],
+  "Nodejs": {
+    "Version": "20",
+    "Debug": "enabled"
+  },
+  "Actions": [
+    {
+      "Name": "Foundry Action",
+      "UUID": "com.telynor.foundry-integration.universal",
+      "Icon": "imgs/action",
+      "Tooltip": "Run any registered Foundry action",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/action",
+          "TitleAlignment": "bottom",
+          "FontSize": 11
+        }
+      ]
+    },
+    {
+      "Name": "Open Foundry Document",
+      "UUID": "com.telynor.foundry-integration.open-document",
+      "Icon": "imgs/document",
+      "Tooltip": "Open an Actor, Item, Journal, or other document",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/document",
+          "TitleAlignment": "bottom",
+          "FontSize": 11
+        }
+      ]
+    },
+    {
+      "Name": "Run Foundry Macro",
+      "UUID": "com.telynor.foundry-integration.run-macro",
+      "Icon": "imgs/macro",
+      "Tooltip": "Run one of your permitted Foundry macros",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/macro",
+          "TitleAlignment": "bottom",
+          "FontSize": 11
+        }
+      ]
+    },
+    {
+      "Name": "Token Control",
+      "UUID": "com.telynor.foundry-integration.token",
+      "Icon": "imgs/token",
+      "Tooltip": "Select or target a configured token",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/token",
+          "TitleAlignment": "bottom",
+          "FontSize": 11
+        }
+      ]
+    },
+    {
+      "Name": "Star Rail Action",
+      "UUID": "com.telynor.foundry-integration.star-rail",
+      "Icon": "imgs/star-rail",
+      "Tooltip": "Run a Tely's Star Rail action",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/star-rail",
+          "TitleAlignment": "bottom",
+          "FontSize": 11
+        }
+      ]
+    }
+  ]
+}
